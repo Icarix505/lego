@@ -148,6 +148,14 @@ for (let deal of deals) {
   communities[deal.community].push(deal);
 }
 console.log(communities);
+
+for (let community in communities) {
+  console.log(
+    community,
+    "has",
+    communities[community].length,
+    "deals"
+  );}
 //
 // Example:
 // const communities = {
@@ -163,6 +171,24 @@ console.log(communities);
 // 🎯 TODO 9: Sort by price for each community
 // 1. For each community, sort the deals by discount price, from highest to lowest
 // 2. Log the sort
+
+function price_per_community(comunities){
+  const sorted={...comunities}
+  for (let comunity in comunities)
+  {
+    sorted[comunity]=sorted_by_price(sorted[comunity])
+  }
+  return sorted
+}
+
+const communities_price=price_per_community({...communities})
+for (let community in communities_price) {
+  console.log(
+    community,
+    "has",
+    communities_price[community],
+    "deals"
+  );}
 
 // 🎯 TODO 10: Sort by date for each community
 // 1. For each set, sort the deals by date, from old to recent
