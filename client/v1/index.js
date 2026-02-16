@@ -111,6 +111,21 @@ console.log(reduction_sorted)
 // 1. Determine the average percentage discount of the deals
 // 2. Log the average
 
+function reduc_avg(deals)
+{
+  let avg=0
+  let k=0
+  for (let deal of deals)
+  {
+    k++
+    avg+=deal.discount
+  }
+  return avg/k
+}
+
+
+const reduction_avg=reduc_avg([...deals])
+console.log(reduction_avg)
 /**
  * 🏎
  * We are almost done with the `deals` variable
