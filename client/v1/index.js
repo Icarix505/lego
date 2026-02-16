@@ -50,7 +50,7 @@ console.log("Highest reduction link:", highestReductionLink);
 // 1. Create a variable and assign it the number of deals
 // 2. Log the variable
 
-deal_lenght=deal.length
+deal_lenght=deals.length
 
 console.log("Number of deals:", numberOfDeals);
 
