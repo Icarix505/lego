@@ -72,7 +72,7 @@ console.log("Number of communities:", communityNames.length);
 function sorted_by_price(deals){
   return [...deals].sort((a,b)=>a.price-b.price)}
 
-const dealsByPrice = sortByPrice(deals);
+const dealsByPrice = sorted_by_price(deals);
 
 console.log("Deals sorted by price (lowest to highest):", dealsByPrice);
 // 🎯 TODO 5: Sort by date
