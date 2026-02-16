@@ -30,6 +30,13 @@ console.log(MY_FAVORITE_DEALERS[0]);
 // 1. Create a new variable and assign it the link of the lego set with the highest reduction I can find on these 2 websites
 // 2. Log the variable
 
+// 🎯 TODO 1: The highest reduction
+
+const highestReductionLink = "https://www.king-jouet.com/jeu-jouet/jeux-constructions/lego-planchettes/ref-934479-43224-lego-disney-le-chateau-du-roi-magnifico.htm";
+
+console.log("Highest reduction link:", highestReductionLink);
+
+
 /**
  * 🧱
  * Easy 😁?
