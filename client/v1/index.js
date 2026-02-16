@@ -137,6 +137,17 @@ console.log(reduction_avg)
 // 1. Create an object called `communities` to manipulate deals by community name 
 // The key is the community name
 // The value is the array of deals for this specific community
+
+const communities = {};
+
+for (let deal of deals) {
+  if (!communities[deal.community]) {
+    communities[deal.community] = [];
+  }
+
+  communities[deal.community].push(deal);
+}
+console.log(communities);
 //
 // Example:
 // const communities = {
