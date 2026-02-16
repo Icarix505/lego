@@ -486,19 +486,63 @@ const VINTED = [
 // 3. Compute the p25 price value of the listing
 // The p25 value (25th percentile) is the lower value expected to be exceeded in 25% of the vinted items
 
+const prices = VINTED.map(item => parseFloat(item.price))
+  .sort((a, b) => a - b);
+
+const avgPrice =
+  prices.reduce((sum, price) => sum + price, 0) / prices.length;
+
+console.log("Average:", avgPrice);
+
+function percentile(arr, p) {
+  const index = Math.floor(p * arr.length);
+  return arr[index];
+}
+
+const p5 = percentile(prices, 0.05);
+const p25 = percentile(prices, 0.25);
+
+console.log("P5:", p5);
+console.log("P25:", p25);
+
+
 // 🎯 TODO 12: Very old listed items
 // // 1. Log if we have very old items (true or false)
 // // A very old item is an item `published` more than 3 weeks ago.
+
+const THREE_WEEKS = 3 * 7 * 24 * 60 * 60 * 1000;
+const now = Date.now();
+
+const hasVeryOldItems = VINTED.some(item => {
+  const publishedDate = new Date(item.published);
+  return now - publishedDate.getTime() > THREE_WEEKS;
+});
+
+console.log("Has very old items:", hasVeryOldItems);
+
 
 // 🎯 TODO 13: Find a specific item
 // 1. Find the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the item
 
+const targetItem = VINTED.find(
+  item => item.uuid === "f2c5377c-84f9-571d-8712-98902dcbb913"
+);
+
+console.log("Found item:", targetItem);
+
 // 🎯 TODO 14: Delete a specific item
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the new list of items
 
-// 🎯 TODO 5: Save a favorite item
+const updatedVinted = VINTED.filter(
+  item => item.uuid !== "f2c5377c-84f9-571d-8712-98902dcbb913"
+);
+
+console.log("Updated list:", updatedVinted);
+
+
+// 🎯 TODO 15: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
 let sealedCamera = {
   link: "https://www.vinted.fr/items/5563396347-lego-43230-omaggio-a-walter-disney-misb",
@@ -542,6 +586,13 @@ const deal = {
 // 2. Log the value
 
 
+const maxResalePrice = Math.max(
+  ...VINTED.map(item => parseFloat(item.price))
+);
+
+const profitability = maxResalePrice - deal.price;
+
+console.log("Max profitability:", profitability);
 
 /**
  * 🎬
@@ -552,3 +603,10 @@ const deal = {
 // 🎯 LAST TODO: Save in localStorage
 // 1. Save MY_FAVORITE_DEALERS in the localStorage
 // 2. log the localStorage
+localStorage.setItem(
+  "MY_FAVORITE_DEALERS",
+  JSON.stringify(MY_FAVORITE_DEALERS)
+);
+
+console.log(localStorage);
+
