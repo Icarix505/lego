@@ -48,6 +48,7 @@ const setCurrentDeals = ({result, meta}) => {
  * @param  {Number}  [size=12] - size of the page
  * @return {Object}
  */
+
 const fetchDeals = async (page = 1, size = 6) => {
   try {
     const response = await fetch(
@@ -144,6 +145,7 @@ const render = (deals, pagination) => {
 /**
  * Select the number of deals to display
  */
+
 selectShow.addEventListener('change', async (event) => {
   const deals = await fetchDeals(currentPagination.currentPage, parseInt(event.target.value));
 
@@ -151,9 +153,26 @@ selectShow.addEventListener('change', async (event) => {
   render(currentDeals, currentPagination);
 });
 
+
+selectShow.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(parseInt(event.target.value), selectShow.value);
+
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
   const deals = await fetchDeals();
 
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
 });
+
+
+
+
+/* side notes :
+the deals section is access by html by searching the variable sectionDeals and checking if the
+id is */
