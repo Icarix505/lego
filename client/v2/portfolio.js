@@ -85,6 +85,7 @@ const renderDeals = deals => {
         <a href="${deal.link}">${deal.title}</a>
         <span>${deal.price}</span>
         <span>${deal.discount}%</span>
+        <span>${deal.temperature}°C</span>  
       </div>
     `;
     })
@@ -172,19 +173,83 @@ if (event.target.value === "discount-asc") {
   setCurrentDeals({result: sortedDeals, meta: currentPagination});
   render(currentDeals, currentPagination);
 }
+else if (event.target.value === "discount-desc") {
+  const sortedDeals = sortDealsByDiscount(deals).reverse();
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "comments-asc") {
+  const sortedDeals = sortDealsByComments(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "comments-desc") {
+  const sortedDeals = sortDealsByComments(deals).reverse();
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "hot-asc") {
+  const sortedDeals = sortDealsByTemperature(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "hot-desc") {
+  const sortedDeals = sortDealsByTemperature(deals).reverse();
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "price-asc") {
+  const sortedDeals = sortDealsByPriceAsc(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "price-desc") {
+  const sortedDeals = sortDealsByPriceDesc(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "date-asc") {
+  const sortedDeals = sortDealsByDateAsc(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else if (event.target.value === "date-desc") {
+  const sortedDeals = sortDealsByDateDesc(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+else {
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
-});
+}});
 
 filtersSelect.addEventListener('change', async (event) => {
   const deals = await fetchDeals(currentPagination.currentPage, currentPagination.pageSize);
+  console.log(event.target.value);
   if (event.target.value === "discount") {
-    deals.result=deals.result.filter(a=> a.discount > 30);
+    deals.result=deals.result.filter(a=> a.discount > 15)
+    const sortedDeals = sortDealsByDiscount(deals);
+    setCurrentDeals({result: sortedDeals, meta: currentPagination});
+    render(currentDeals, currentPagination);
   }
-
+  if (event.target.value === "comments") {
+    deals.result=deals.result.filter(a=> a.comments > 7);
+    const sortedDeals = sortDealsByComments(deals);
+    setCurrentDeals({result: sortedDeals, meta: currentPagination});
+    render(currentDeals, currentPagination);
+  }
+  if (event.target.value === "hot") {
+    deals.result=deals.result.filter(a=> a.temperature >100);
+    const sortedDeals = sortDealsByTemperature(deals);
+    setCurrentDeals({result: sortedDeals, meta: currentPagination});
+    render(currentDeals, currentPagination);
+    setCurrentDeals(deals);
+    render(currentDeals, currentPagination);
+  }
+  else {  
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
-});
+}});
 
 
 document.addEventListener('DOMContentLoaded', async () => {
