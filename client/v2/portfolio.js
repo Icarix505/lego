@@ -90,7 +90,7 @@ const renderDeals = deals => {
     `;
     })
     .join('');
-
+  RenderNbofDeals(deals);
   div.innerHTML = template;
   fragment.appendChild(div);
   sectionDeals.innerHTML = '<h2>Deals</h2>';
@@ -251,6 +251,63 @@ filtersSelect.addEventListener('change', async (event) => {
   render(currentDeals, currentPagination);
 }});
 
+
+selectLegoSetIds.addEventListener('change', async (event) => {
+  const response = await fetch(
+    `https://lego-api-blue.vercel.app/sales?id=${event.target.value}`
+  );
+  const body = await response.json();
+
+  if (body.success !== true) {
+    console.error(body);
+    return;
+  }
+
+  const sales = body.data.result;
+  const fragment = document.createDocumentFragment();
+  const div = document.createElement('div');
+  console.log(sales);
+  const template = sales
+    .map(sale => {
+      return `
+      <div class="sale" id=${sale.uuid}>
+        <span>${sale.uuid}</span>
+        <a href="${sale.link}">
+        ${sale.title}</a>
+        <span>${sale.price.amount}</span>
+      </div>
+    `;
+    })
+    .join('');
+    RenderNumberOfSales(sales);
+    Renderp5PercentilePrice(sales);
+    Renderp25PercentilePrice(sales);
+    Renderp50PercentilePrice(sales);
+  div.innerHTML = template;
+  fragment.appendChild(div);
+  sectionDeals.innerHTML = '<h2>Sales</h2>';
+  sectionDeals.appendChild(fragment);
+});
+
+
+const RenderNumberOfSales = (sales) => {document.querySelector('#nbSales').textContent = sales.length;};
+const Renderp5PercentilePrice = (sales) => {
+  const prices = sales.map(sale => sale.price.amount).sort((a, b) => a - b);
+  const p5 = getPercentileValue(prices, 5);
+  document.querySelector('#p5').textContent = p5;
+}
+const Renderp25PercentilePrice = (sales) => {
+  const prices = sales.map(sale => sale.price.amount).sort((a, b) => a - b);
+  const p25 = getPercentileValue(prices, 25);
+  document.querySelector('#p25').textContent = p25;
+}
+const Renderp50PercentilePrice = (sales) => {
+  const prices = sales.map(sale => sale.price.amount).sort((a, b) => a - b);
+  const p50 = getPercentileValue(prices, 50);
+  document.querySelector('#p50').textContent = p50;
+}
+
+const RenderNbofDeals = (deals) => {document.querySelector('#nbDeals').textContent = deals.length;};
 
 document.addEventListener('DOMContentLoaded', async () => {
   const deals = await fetchDeals();

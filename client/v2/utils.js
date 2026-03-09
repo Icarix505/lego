@@ -46,4 +46,9 @@ const sortDealsByDateDesc = deals => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })
 }
+const getPercentileValue = (values, percentile) => {
+  if (values.length === 0) return 0;
 
+  const index = Math.floor((percentile / 100) * (values.length - 1));
+  return values[index];
+};
