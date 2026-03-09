@@ -10,3 +10,10 @@
 const getIdsFromDeals = deals => {
     return deals.map(deal => deal.id)
 }
+
+const sortDealsByDiscount = deals => {
+    return deals.result.sort((a, b) => {
+        return b.discount - a.discount
+    })
+}
+

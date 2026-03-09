@@ -31,6 +31,8 @@ const selectPage = document.querySelector('#page-select');
 const selectLegoSetIds = document.querySelector('#lego-set-id-select');
 const sectionDeals= document.querySelector('#deals');
 const spanNbDeals = document.querySelector('#nbDeals');
+const filtersSelect = document.querySelector("#filters-select");
+const sortSelect = document.querySelector("#sort-select");
 
 /**
  * Set global value
@@ -82,6 +84,7 @@ const renderDeals = deals => {
         <span>${deal.id}</span>
         <a href="${deal.link}">${deal.title}</a>
         <span>${deal.price}</span>
+        <span>${deal.discount}%</span>
       </div>
     `;
     })
@@ -154,13 +157,34 @@ selectShow.addEventListener('change', async (event) => {
 });
 
 
-selectShow.addEventListener('change', async (event) => {
-  const deals = await fetchDeals(parseInt(event.target.value), selectShow.value);
-
+selectPage.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(parseInt(event.target.value), currentPagination.pageSize);
+  currentPagination.page = parseInt(event.target.value);
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
 });
 
+sortSelect.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(currentPagination.currentPage, currentPagination.pageSize);
+  console.log(event.target.value);
+if (event.target.value === "discount-asc") {
+  const sortedDeals = sortDealsByDiscount(deals);
+  setCurrentDeals({result: sortedDeals, meta: currentPagination});
+  render(currentDeals, currentPagination);
+}
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+filtersSelect.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(currentPagination.currentPage, currentPagination.pageSize);
+  if (event.target.value === "discount") {
+    deals.result=deals.result.filter(a=> a.discount > 30);
+  }
+
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
 
 
 document.addEventListener('DOMContentLoaded', async () => {

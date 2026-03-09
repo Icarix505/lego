@@ -20,9 +20,12 @@
         <select name="page" id="page-select"> </select>
       </div>
       <div id="filters">
-        <span>By best discount</span>
-        <span>By most commented</span>
-        <span>By hot deals</span>
+        <label for="filters-select">Filter:</label>
+        <select name="filters" id="filters-select">
+          <option value="discount">By best discount(>30% because no 50%)</option>
+          <option value="comments">By most commented</option>
+          <option value="hot">By hot deals</option>
+        </select>
       </div>
       <div id="sort">
         <label for="sort-select">Sort:</label>
@@ -31,6 +34,8 @@
           <option value="price-desc">Expensive</option>
           <option value="date-asc">Recently published</option>
           <option value="date-desc">Anciently published</option>
+          <option value="discount-asc">Best discount</option>
+          <option value="discount-desc">Worst discount</option>
         </select>
       </div>
     </section>
