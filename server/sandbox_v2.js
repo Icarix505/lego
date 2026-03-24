@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-process-exit */
+/* eslint-disable no-console */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -17,7 +17,7 @@ async function writeJsonFile(relativeFilePath, data) {
 }
 
 async function scrapeADLB(website = 'https://www.avenuedelabrique.com/promotions-et-bons-plans-lego') {
-  console.log(`🕵️‍♀️  browsing ${website} website`);
+  console.log(`🕵️‍♀️ browsing ${website} website`);
 
   const deals = await avenuedelabrique.scrape(website);
 
@@ -71,10 +71,7 @@ const [, , param] = process.argv;
     } else {
       await scrapeVinted(param);
     }
-
-    process.exit(0);
   } catch (e) {
     console.error(e);
-    process.exit(1);
   }
 })();

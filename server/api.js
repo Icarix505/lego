@@ -1,67 +1,208 @@
-import bodyParser from 'body-parser';
-import cors from 'cors';
 import express from 'express';
-import helmet from 'helmet';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { saveDealsJson } from './websites/dealabs.js';
 
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
+const app = express();
+const PORT = 8092;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const DEALS_FILE = path.join(__dirname, 'data', 'dealabs.json');
+const SALES_FILE = path.join(__dirname, 'sources', 'vinted.json');
+const CLIENT_V2_DIR = path.join(__dirname, '..', 'client', 'v2');
 
-const PORT = 8092;
+async function readJson(filePath) {
+  const text = await fs.readFile(filePath, 'utf-8');
+  return JSON.parse(text);
+}
 
-const app = express();
+function paginate(items, page = 1, size = 6) {
+  const count = items.length;
+  const pageCount = Math.max(1, Math.ceil(count / size));
+  const currentPage = Math.min(Math.max(page, 1), pageCount);
 
-// We load json files as data source
-let SALES = {};
+  const start = (currentPage - 1) * size;
+  const end = start + size;
 
-app.use(bodyParser.json());
-app.use(cors());
-app.use(helmet());
-app.use(cors())
+  return {
+    result: items.slice(start, end),
+    meta: {
+      count,
+      pageCount,
+      currentPage,
+      pageSize: size
+    }
+  };
+}
 
-app.get('/', (request, response) => {
-  response.send({'ack': true});
+function adaptDealForV2(deal) {
+  return {
+    uuid: deal.uuid,
+    id: deal.id,
+    title: deal.title,
+    link: deal.link,
+    price: deal.price,
+    discount: deal.discount,
+    temperature: deal.temperature,
+    comments: deal.comments,
+    createdAt: deal.published
+  };
+}
+
+function adaptSaleForV2(sale) {
+  return {
+    uuid: sale.uuid,
+    link: sale.link,
+    title: sale.title,
+    published: sale.published,
+    price: sale.price
+  };
+}
+
+app.use('/v2', express.static(CLIENT_V2_DIR));
+
+app.get('/', (_req, res) => {
+  res.json({
+    success: true,
+    routes: ['/v2/', '/deals', '/sales', '/deals/search', '/sales/search']
+  });
 });
 
-app.get('/sales/search', (request, response) => {
-  response.setHeader('Access-Control-Allow-Credentials', true)
-  response.setHeader('Access-Control-Allow-Origin', '*')
-  response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  response.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
 
+app.get('/deals', async (req, res) => {
   try {
-    const { legoSetId } = request.query;
-    const result = SALES[legoSetId] || []
+    const page = Number(req.query.page) || 1;
+    const size = Number(req.query.size) || 6;
 
-    return response.status(200).json({
-      'success': true,
-      'data': {'result': result}
+    let deals = await readJson(DEALS_FILE);
+    deals = deals.map(adaptDealForV2);
+
+    deals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const data = paginate(deals, page, size);
+
+    return res.json({
+      success: true,
+      data
     });
   } catch (error) {
-    console.log(error);
-    return response.status(404).send({
-      'success': false,
-      'data': {'result': []}
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      error: 'Cannot read deals file',
+      message: error.message
+    });
+  }
+});
+
+// GET /sales?id=10362
+app.get('/sales', async (req, res) => {
+  try {
+    const id = String(req.query.id || '');
+    const salesBySetId = await readJson(SALES_FILE);
+
+    const result = id ? (salesBySetId[id] || []) : [];
+
+    result.sort((a, b) => Number(b.published || 0) - Number(a.published || 0));
+
+    return res.json({
+      success: true,
+      data: {
+        result: result.map(adaptSaleForV2)
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      error: 'Cannot read sales file',
+      message: error.message
     });
   }
 });
 
 
-app.listen(PORT, () => {
-  // when we start the server we load available json files
+// GET /deals/search?limit=12&price=25&date=2026-03-01&filterBy=most-commented
+app.get('/deals/search', async (req, res) => {
   try {
-    SALES = JSON.parse(
-      readFileSync(path.join(__dirname, 'sources', 'vinted.json'), 'utf8')
-    );
-  } catch (error) {
-    console.warn(`⚠️  ${error}`);
-  }
-})
+    const limit = Number(req.query.limit) || 12;
+    const maxPrice = req.query.price ? Number(req.query.price) : null;
+    const minDate = req.query.date ? new Date(req.query.date) : null;
+    const filterBy = req.query.filterBy;
 
-console.log(`📡 Running on port ${PORT}`);
+    let deals = await readJson(DEALS_FILE);
+
+    if (maxPrice !== null) {
+      deals = deals.filter((deal) => Number(deal.price) <= maxPrice);
+    }
+
+    if (minDate) {
+      deals = deals.filter((deal) => {
+        if (!deal.published) return false;
+        return new Date(deal.published) >= minDate;
+      });
+    }
+
+    if (filterBy === 'best-discount') {
+      deals.sort((a, b) => Number(b.discount || 0) - Number(a.discount || 0));
+    } else if (filterBy === 'most-commented') {
+      deals.sort((a, b) => Number(b.comments || 0) - Number(a.comments || 0));
+    } else {
+      deals.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+    }
+
+    return res.json({
+      limit,
+      total: deals.slice(0, limit).length,
+      results: deals.slice(0, limit)
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: 'Cannot search deals',
+      message: error.message
+    });
+  }
+});
+
+// GET /sales/search?legoSetId=10362&limit=12
+app.get('/sales/search', async (req, res) => {
+  try {
+    const limit = Number(req.query.limit) || 12;
+    const legoSetId = String(req.query.legoSetId || '');
+    const salesBySetId = await readJson(SALES_FILE);
+
+    let result = legoSetId ? (salesBySetId[legoSetId] || []) : [];
+
+    result.sort((a, b) => Number(b.published || 0) - Number(a.published || 0));
+
+    return res.json({
+      limit,
+      total: result.slice(0, limit).length,
+      results: result.slice(0, limit)
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: 'Cannot search sales',
+      message: error.message
+    });
+  }
+});
+
+async function boot() {
+  await saveDealsJson('https://www.dealabs.com/groupe/lego');
+
+  app.listen(PORT, () => {
+    console.log(`API running on http://localhost:${PORT}`);
+    console.log(`Open the website on http://localhost:${PORT}/v2/`);
+  });
+}
+
+boot().catch((error) => {
+  console.error('Boot failed:', error);
+  process.exit(1);
+});
