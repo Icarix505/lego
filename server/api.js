@@ -2,7 +2,9 @@ import express from 'express';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
 import { saveDealsJson } from './websites/dealabs.js';
+import { buildVintedJsonFromDeals } from './websites/vinted.js';
 
 const app = express();
 const PORT = 8092;
@@ -65,12 +67,12 @@ function adaptSaleForV2(sale) {
 app.use('/v2', express.static(CLIENT_V2_DIR));
 
 app.get('/', (_req, res) => {
-  res.json({
-    success: true,
-    routes: ['/v2/', '/deals', '/sales', '/deals/search', '/sales/search']
-  });
+  res.redirect('/v2/');
 });
 
+app.get('/health', (_req, res) => {
+  res.json({ ok: true });
+});
 
 app.get('/deals', async (req, res) => {
   try {
@@ -98,10 +100,9 @@ app.get('/deals', async (req, res) => {
   }
 });
 
-// GET /sales?id=10362
 app.get('/sales', async (req, res) => {
   try {
-    const id = String(req.query.id || '');
+    const id = String(req.query.id || '').trim();
     const salesBySetId = await readJson(SALES_FILE);
 
     const result = id ? (salesBySetId[id] || []) : [];
@@ -124,8 +125,6 @@ app.get('/sales', async (req, res) => {
   }
 });
 
-
-// GET /deals/search?limit=12&price=25&date=2026-03-01&filterBy=most-commented
 app.get('/deals/search', async (req, res) => {
   try {
     const limit = Number(req.query.limit) || 12;
@@ -168,11 +167,10 @@ app.get('/deals/search', async (req, res) => {
   }
 });
 
-// GET /sales/search?legoSetId=10362&limit=12
 app.get('/sales/search', async (req, res) => {
   try {
     const limit = Number(req.query.limit) || 12;
-    const legoSetId = String(req.query.legoSetId || '');
+    const legoSetId = String(req.query.legoSetId || '').trim();
     const salesBySetId = await readJson(SALES_FILE);
 
     let result = legoSetId ? (salesBySetId[legoSetId] || []) : [];
@@ -182,7 +180,7 @@ app.get('/sales/search', async (req, res) => {
     return res.json({
       limit,
       total: result.slice(0, limit).length,
-      results: result.slice(0, limit)
+      results: result.slice(0, limit).map(adaptSaleForV2)
     });
   } catch (error) {
     console.error(error);
@@ -194,7 +192,14 @@ app.get('/sales/search', async (req, res) => {
 });
 
 async function boot() {
+  console.log('Step 1: scraping Dealabs...');
   await saveDealsJson('https://www.dealabs.com/groupe/lego');
+
+  console.log('Step 2: reading dealabs.json...');
+  const deals = await readJson(DEALS_FILE);
+
+  console.log('Step 3: building vinted.json from deal ids...');
+  await buildVintedJsonFromDeals(deals);
 
   app.listen(PORT, () => {
     console.log(`API running on http://localhost:${PORT}`);

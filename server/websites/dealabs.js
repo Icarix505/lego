@@ -50,7 +50,7 @@ function parse(html) {
       return;
     }
 
-    const thread = parsed?.props?.thread;
+    const thread = parsed?.props?.thread;//attribute of attribute 
     if (!thread) return;
 
     const dealUuid = uuidv5(`dealabs:${thread.threadId}`, uuidv5.URL);

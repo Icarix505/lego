@@ -54,7 +54,7 @@ const setCurrentDeals = ({result, meta}) => {
 const fetchDeals = async (page = 1, size = 6) => {
   try {
     const response = await fetch(
-      `https://lego-api-blue.vercel.app/deals?page=${page}&size=${size}`
+      `http://localhost:8092/deals?page=${page}&size=${size}`
     );
     const body = await response.json();
 
@@ -254,7 +254,7 @@ filtersSelect.addEventListener('change', async (event) => {
 
 selectLegoSetIds.addEventListener('change', async (event) => {
   const response = await fetch(
-    `https://lego-api-blue.vercel.app/sales?id=${event.target.value}`
+    `http://localhost:8092/sales?id=${event.target.value}`
   );
   const body = await response.json();
 
