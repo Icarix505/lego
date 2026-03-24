@@ -128,20 +128,33 @@ async function buildVintedJsonFromDeals(deals) {
   )];
 
   for (const id of ids) {
-  if (Array.isArray(output[id])) {
-    console.log(`Replacing Vinted cache for ${id}...`);
-  } else {
-    console.log(`Scraping Vinted for Lego set ${id}...`);
+    try {
+      console.log(`Refreshing Vinted cache for Lego set ${id}...`);
+
+      const sales = await scrape(id);
+
+      if (Array.isArray(sales) && sales.length > 0) {
+        console.log(`Updated ${id} with ${sales.length} sales`);
+        output[id] = sales;
+      } else {
+        console.log(`Keeping previous cache for ${id} because new fetch is empty`);
+
+        if (!Array.isArray(output[id])) {
+          output[id] = [];
+        }
+      }
+    } catch (error) {
+      console.error(`Error while refreshing ${id}:`, error.message || error);
+      console.log(`Keeping previous cache for ${id}`);
+
+      if (!Array.isArray(output[id])) {
+        output[id] = [];
+      }
+    }
+
+    await writeJson(VINTED_JSON_FILE, output);
+    await delay(1200);
   }
-
-  const sales = await scrape(id);
-
-  output[id] = sales;
-
-  await writeJson(VINTED_JSON_FILE, output);
-
-  await delay(1200);
-}
 
   return output;
 }

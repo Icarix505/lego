@@ -50,7 +50,8 @@ function adaptDealForV2(deal) {
     discount: deal.discount,
     temperature: deal.temperature,
     comments: deal.comments,
-    createdAt: deal.published
+    createdAt: deal.published,
+    photo: deal.photo || null
   };
 }
 

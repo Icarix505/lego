@@ -5,14 +5,15 @@
     "retail": 129.99,
     "price": 79.99,
     "discount": 38,
-    "temperature": 22.28,
+    "temperature": 96.78,
     "comments": 0,
     "published": "2026-03-24T13:45:52.000Z",
     "title": "LEGO 76344 Super Heroes - Iron Man Mark 3 Edition collector (Frontaliers Belgique)",
     "id": "76344",
     "dealabsId": "3301700",
     "community": "dealabs",
-    "uuid": "5fe84ac9-5cb0-52ae-ae2b-e55102edd202"
+    "uuid": "5fe84ac9-5cb0-52ae-ae2b-e55102edd202",
+    "photo": null
   },
   {
     "_id": "e9ed565f-993e-525f-801d-1c3e646db59b",
@@ -20,14 +21,15 @@
     "retail": 0,
     "price": 0,
     "discount": 0,
-    "temperature": 23.77,
-    "comments": 0,
+    "temperature": 56.39,
+    "comments": 1,
     "published": "2026-03-24T13:40:40.000Z",
     "title": "Construisez un œuf de Pâques LEGO et repartez avec (samedi 28 mars)",
     "id": "3301693",
     "dealabsId": "3301693",
     "community": "dealabs",
-    "uuid": "e9ed565f-993e-525f-801d-1c3e646db59b"
+    "uuid": "e9ed565f-993e-525f-801d-1c3e646db59b",
+    "photo": null
   },
   {
     "_id": "526a084c-7cab-5d78-b9dc-8da4ac4393e9",
@@ -35,14 +37,15 @@
     "retail": 14.16,
     "price": 13.21,
     "discount": 7,
-    "temperature": 3.53,
+    "temperature": 3.82,
     "comments": 0,
     "published": "2026-03-24T11:09:18.000Z",
     "title": "Lego Sonic 77001 - Conflit au feu de camp - Lego Sonic",
     "id": "77001",
     "dealabsId": "3301611",
     "community": "dealabs",
-    "uuid": "526a084c-7cab-5d78-b9dc-8da4ac4393e9"
+    "uuid": "526a084c-7cab-5d78-b9dc-8da4ac4393e9",
+    "photo": null
   },
   {
     "_id": "81563951-39e3-5ebe-8fa7-be5920c63371",
@@ -50,14 +53,15 @@
     "retail": 30.99,
     "price": 23.24,
     "discount": 25,
-    "temperature": 32.21,
+    "temperature": 39.41,
     "comments": 0,
     "published": "2026-03-24T09:50:14.000Z",
     "title": "LEGO City 60478 - La Bétonnière (Via 7,75€ de fidélité)",
     "id": "60478",
     "dealabsId": "3301550",
     "community": "dealabs",
-    "uuid": "81563951-39e3-5ebe-8fa7-be5920c63371"
+    "uuid": "81563951-39e3-5ebe-8fa7-be5920c63371",
+    "photo": null
   },
   {
     "_id": "c204cc7c-ff65-5f02-896f-12f52371628c",
@@ -65,14 +69,15 @@
     "retail": 39.9,
     "price": 29.92,
     "discount": 25,
-    "temperature": 36.2,
+    "temperature": 35.8,
     "comments": 0,
     "published": "2026-03-24T09:09:32.000Z",
     "title": "Jouet Lego City 60493 Camion de F1 avec Voiture de Course de F1 Audi (via 9,98€ de fidélité)",
     "id": "60493",
     "dealabsId": "3301522",
     "community": "dealabs",
-    "uuid": "c204cc7c-ff65-5f02-896f-12f52371628c"
+    "uuid": "c204cc7c-ff65-5f02-896f-12f52371628c",
+    "photo": null
   },
   {
     "_id": "e73aa13a-771f-5bd2-b4ae-bdcd1fe52662",
@@ -80,14 +85,15 @@
     "retail": 13.99,
     "price": 10.49,
     "discount": 25,
-    "temperature": 40.6,
-    "comments": 10,
+    "temperature": 46.4,
+    "comments": 11,
     "published": "2026-03-24T08:50:42.000Z",
     "title": "LEGO City 60452 - Le camion de Donuts (via 3.50€ en fidélité)",
     "id": "60452",
     "dealabsId": "3301507",
     "community": "dealabs",
-    "uuid": "e73aa13a-771f-5bd2-b4ae-bdcd1fe52662"
+    "uuid": "e73aa13a-771f-5bd2-b4ae-bdcd1fe52662",
+    "photo": null
   },
   {
     "_id": "85ba64ab-63fd-5337-829e-40cc2ce08ce9",
@@ -95,14 +101,15 @@
     "retail": 63.56,
     "price": 47.67,
     "discount": 25,
-    "temperature": 77.33,
-    "comments": 0,
+    "temperature": 84.53,
+    "comments": 1,
     "published": "2026-03-24T06:43:18.000Z",
     "title": "Lego Disney 43268 - La maison sur la plage de Lilo et Stitch (via 15,89€ cagnotté)",
     "id": "43268",
     "dealabsId": "3301426",
     "community": "dealabs",
-    "uuid": "85ba64ab-63fd-5337-829e-40cc2ce08ce9"
+    "uuid": "85ba64ab-63fd-5337-829e-40cc2ce08ce9",
+    "photo": null
   },
   {
     "_id": "29bd17c8-9118-5043-a7e9-fb99a987c756",
@@ -110,14 +117,15 @@
     "retail": 49.79,
     "price": 44.99,
     "discount": 10,
-    "temperature": 34.2,
+    "temperature": 38.29,
     "comments": 1,
     "published": "2026-03-24T06:41:57.000Z",
     "title": "Lego Botanicals 11504 - Les Fleurs de Lune",
     "id": "11504",
     "dealabsId": "3301424",
     "community": "dealabs",
-    "uuid": "29bd17c8-9118-5043-a7e9-fb99a987c756"
+    "uuid": "29bd17c8-9118-5043-a7e9-fb99a987c756",
+    "photo": null
   },
   {
     "_id": "7c7bc67f-3a05-53e2-a3d8-08780fad8ee7",
@@ -125,14 +133,15 @@
     "retail": 18.74,
     "price": 17.9,
     "discount": 4,
-    "temperature": 65.12,
+    "temperature": 67.81,
     "comments": 0,
     "published": "2026-03-24T06:05:26.000Z",
     "title": "Lego Speed Champions 77251 - McLaren F1 Team MCL38 Race Car",
     "id": "77251",
     "dealabsId": "3301412",
     "community": "dealabs",
-    "uuid": "7c7bc67f-3a05-53e2-a3d8-08780fad8ee7"
+    "uuid": "7c7bc67f-3a05-53e2-a3d8-08780fad8ee7",
+    "photo": null
   },
   {
     "_id": "5f975ffa-1451-5580-81d2-a7c110414b65",
@@ -140,14 +149,15 @@
     "retail": 11.99,
     "price": 8.99,
     "discount": 25,
-    "temperature": 51.42,
+    "temperature": 58.62,
     "comments": 0,
     "published": "2026-03-24T05:22:32.000Z",
     "title": "Lego City 60402 - Le Monster Truck Bleu (via 3€ sur la carte fidélité)",
     "id": "60402",
     "dealabsId": "3301402",
     "community": "dealabs",
-    "uuid": "5f975ffa-1451-5580-81d2-a7c110414b65"
+    "uuid": "5f975ffa-1451-5580-81d2-a7c110414b65",
+    "photo": null
   },
   {
     "_id": "9893986f-2c03-5cc5-81a9-10d58b2ebad6",
@@ -162,7 +172,8 @@
     "id": "43271",
     "dealabsId": "3301401",
     "community": "dealabs",
-    "uuid": "9893986f-2c03-5cc5-81a9-10d58b2ebad6"
+    "uuid": "9893986f-2c03-5cc5-81a9-10d58b2ebad6",
+    "photo": null
   },
   {
     "_id": "56181e4a-e04e-5344-9dec-08326dbc246a",
@@ -170,14 +181,15 @@
     "retail": 30.99,
     "price": 23.24,
     "discount": 25,
-    "temperature": 46.02,
+    "temperature": 48.42,
     "comments": 0,
     "published": "2026-03-24T05:16:38.000Z",
     "title": "LEGO Creator 31165 - La famille Panda en jeu (via 7,75€ sur la Carte fidélité)",
     "id": "31165",
     "dealabsId": "3301399",
     "community": "dealabs",
-    "uuid": "56181e4a-e04e-5344-9dec-08326dbc246a"
+    "uuid": "56181e4a-e04e-5344-9dec-08326dbc246a",
+    "photo": null
   },
   {
     "_id": "026376a8-0630-5ced-8170-6eddfe379a01",
@@ -192,7 +204,8 @@
     "id": "43300",
     "dealabsId": "3301396",
     "community": "dealabs",
-    "uuid": "026376a8-0630-5ced-8170-6eddfe379a01"
+    "uuid": "026376a8-0630-5ced-8170-6eddfe379a01",
+    "photo": null
   },
   {
     "_id": "81e0b227-7071-5ba1-b5e5-1f66219ade3a",
@@ -207,7 +220,8 @@
     "id": "31175",
     "dealabsId": "3301395",
     "community": "dealabs",
-    "uuid": "81e0b227-7071-5ba1-b5e5-1f66219ade3a"
+    "uuid": "81e0b227-7071-5ba1-b5e5-1f66219ade3a",
+    "photo": null
   },
   {
     "_id": "41437341-47de-50de-970d-a156d48e2ea8",
@@ -215,14 +229,15 @@
     "retail": 0,
     "price": 58.9,
     "discount": 0,
-    "temperature": 40.81,
+    "temperature": 42.5,
     "comments": 1,
     "published": "2026-03-23T19:59:08.000Z",
     "title": "Jouet Lego Icons Le café français 10362",
     "id": "10362",
     "dealabsId": "3301268",
     "community": "dealabs",
-    "uuid": "41437341-47de-50de-970d-a156d48e2ea8"
+    "uuid": "41437341-47de-50de-970d-a156d48e2ea8",
+    "photo": null
   },
   {
     "_id": "07dc71ba-262c-53b5-85e6-68565681723f",
@@ -230,14 +245,15 @@
     "retail": 11.99,
     "price": 8.99,
     "discount": 25,
-    "temperature": 326.02,
+    "temperature": 333.22,
     "comments": 0,
     "published": "2026-03-23T18:18:46.000Z",
     "title": "LEGO Botanicals - Marguerites - 11508 (via 3 € de fidélité)",
     "id": "11508",
     "dealabsId": "3301216",
     "community": "dealabs",
-    "uuid": "07dc71ba-262c-53b5-85e6-68565681723f"
+    "uuid": "07dc71ba-262c-53b5-85e6-68565681723f",
+    "photo": null
   },
   {
     "_id": "3f22ed85-113a-54bc-9191-4fc9935a2b38",
@@ -245,14 +261,15 @@
     "retail": 84.99,
     "price": 63.74,
     "discount": 25,
-    "temperature": 63.63,
+    "temperature": 66.03,
     "comments": 3,
     "published": "2026-03-23T18:07:47.000Z",
     "title": "Jeu de Construction LEGO Star Wars 75416 - Ahsoka Le Droïde Astromécano (via 21.25€ sur la carte fidélité)",
     "id": "75416",
     "dealabsId": "3301205",
     "community": "dealabs",
-    "uuid": "3f22ed85-113a-54bc-9191-4fc9935a2b38"
+    "uuid": "3f22ed85-113a-54bc-9191-4fc9935a2b38",
+    "photo": null
   },
   {
     "_id": "856ad14e-09a6-5527-99ff-fa2c5cfd167b",
@@ -260,14 +277,15 @@
     "retail": 44.99,
     "price": 33.74,
     "discount": 25,
-    "temperature": 86.39,
+    "temperature": 88.79,
     "comments": 2,
     "published": "2026-03-23T18:04:37.000Z",
     "title": "Lego City 60466 - Le bulldozer jaune (via 11.25€ fidélité)",
     "id": "60466",
     "dealabsId": "3301204",
     "community": "dealabs",
-    "uuid": "856ad14e-09a6-5527-99ff-fa2c5cfd167b"
+    "uuid": "856ad14e-09a6-5527-99ff-fa2c5cfd167b",
+    "photo": null
   },
   {
     "_id": "73a3bc3a-42d6-5417-9149-89c50739560b",
@@ -275,14 +293,15 @@
     "retail": 16.99,
     "price": 12.74,
     "discount": 25,
-    "temperature": 58.96,
+    "temperature": 61.36,
     "comments": 0,
     "published": "2026-03-23T18:01:53.000Z",
     "title": "Lego City 60490 - La Déneigeuse (via 4.25€ sur la carte fidélité)",
     "id": "60490",
     "dealabsId": "3301203",
     "community": "dealabs",
-    "uuid": "73a3bc3a-42d6-5417-9149-89c50739560b"
+    "uuid": "73a3bc3a-42d6-5417-9149-89c50739560b",
+    "photo": null
   },
   {
     "_id": "d4c6c6db-0d80-5023-a8fc-ac9e6204d177",
@@ -297,7 +316,8 @@
     "id": "42201",
     "dealabsId": "3301202",
     "community": "dealabs",
-    "uuid": "d4c6c6db-0d80-5023-a8fc-ac9e6204d177"
+    "uuid": "d4c6c6db-0d80-5023-a8fc-ac9e6204d177",
+    "photo": null
   },
   {
     "_id": "e79fa7e5-3e91-5598-829f-aaecbc08f1e4",
@@ -312,7 +332,8 @@
     "id": "75410",
     "dealabsId": "3301200",
     "community": "dealabs",
-    "uuid": "e79fa7e5-3e91-5598-829f-aaecbc08f1e4"
+    "uuid": "e79fa7e5-3e91-5598-829f-aaecbc08f1e4",
+    "photo": null
   },
   {
     "_id": "184f1042-dc8d-5468-bd20-fabaf8a0d18b",
@@ -320,14 +341,15 @@
     "retail": 25.99,
     "price": 19.49,
     "discount": 25,
-    "temperature": 459.09,
+    "temperature": 497.49,
     "comments": 6,
     "published": "2026-03-23T17:46:26.000Z",
     "title": "Lego Speed Champions 77256 - La Machine à Remonter le Temps de Retour vers le Futur (via 6,50€ cagnottés sur la carte de fidélité)",
     "id": "77256",
     "dealabsId": "3301192",
     "community": "dealabs",
-    "uuid": "184f1042-dc8d-5468-bd20-fabaf8a0d18b"
+    "uuid": "184f1042-dc8d-5468-bd20-fabaf8a0d18b",
+    "photo": null
   },
   {
     "_id": "b663c93e-a66d-57b4-bbc6-b9cb0b2da4ef",
@@ -335,14 +357,15 @@
     "retail": 115.99,
     "price": 86.99,
     "discount": 25,
-    "temperature": 73.81,
+    "temperature": 74.81,
     "comments": 0,
     "published": "2026-03-23T17:44:21.000Z",
     "title": "Lego Star Wars 75374 - Le Onyx Cinder (via 29€ de cagnotte)",
     "id": "75374",
     "dealabsId": "3301190",
     "community": "dealabs",
-    "uuid": "b663c93e-a66d-57b4-bbc6-b9cb0b2da4ef"
+    "uuid": "b663c93e-a66d-57b4-bbc6-b9cb0b2da4ef",
+    "photo": null
   },
   {
     "_id": "5062b9f9-048e-5202-b5e0-ee771492049f",
@@ -350,14 +373,15 @@
     "retail": 999,
     "price": 921.32,
     "discount": 8,
-    "temperature": -123.51,
+    "temperature": -127.71,
     "comments": 6,
     "published": "2026-03-23T17:20:18.000Z",
     "title": "Lego Star Wars 75419 L'Étoile de la Mort",
     "id": "75419",
     "dealabsId": "3301181",
     "community": "dealabs",
-    "uuid": "5062b9f9-048e-5202-b5e0-ee771492049f"
+    "uuid": "5062b9f9-048e-5202-b5e0-ee771492049f",
+    "photo": null
   },
   {
     "_id": "e7c7b270-f698-54b1-84dd-699ee52aa9f7",
@@ -365,14 +389,15 @@
     "retail": 159.9,
     "price": 119.93,
     "discount": 25,
-    "temperature": 221.49,
+    "temperature": 227.47,
     "comments": 0,
     "published": "2026-03-23T16:59:45.000Z",
     "title": "Jeu de construction Lego Technic 42202 - La Moto Ducati Panigale V4 S (via 39,98€ en cagnotte)",
     "id": "42202",
     "dealabsId": "3301173",
     "community": "dealabs",
-    "uuid": "e7c7b270-f698-54b1-84dd-699ee52aa9f7"
+    "uuid": "e7c7b270-f698-54b1-84dd-699ee52aa9f7",
+    "photo": null
   },
   {
     "_id": "8b7395a1-5ac0-530a-ae19-a8a0b728c655",
@@ -380,14 +405,15 @@
     "retail": 7.99,
     "price": 5.99,
     "discount": 25,
-    "temperature": 55.8,
+    "temperature": 58.2,
     "comments": 0,
     "published": "2026-03-23T16:40:45.000Z",
     "title": "Jouet Lego Technic Le tractopelle ou L’Abatteuse John Deere 1470H (via 2€ sur la carte)",
     "id": "42218",
     "dealabsId": "3301160",
     "community": "dealabs",
-    "uuid": "8b7395a1-5ac0-530a-ae19-a8a0b728c655"
+    "uuid": "8b7395a1-5ac0-530a-ae19-a8a0b728c655",
+    "photo": null
   },
   {
     "_id": "c0b3b9d8-4f4e-5bd8-9992-87c26fed07af",
@@ -402,7 +428,8 @@
     "id": "60443",
     "dealabsId": "3301144",
     "community": "dealabs",
-    "uuid": "c0b3b9d8-4f4e-5bd8-9992-87c26fed07af"
+    "uuid": "c0b3b9d8-4f4e-5bd8-9992-87c26fed07af",
+    "photo": null
   },
   {
     "_id": "a197d8e3-de4c-5b6d-ac89-98618cf36a61",
@@ -417,7 +444,8 @@
     "id": "60505",
     "dealabsId": "3301141",
     "community": "dealabs",
-    "uuid": "a197d8e3-de4c-5b6d-ac89-98618cf36a61"
+    "uuid": "a197d8e3-de4c-5b6d-ac89-98618cf36a61",
+    "photo": null
   },
   {
     "_id": "7fc06601-56ab-5f16-a101-0c61795fd5b9",
@@ -432,7 +460,8 @@
     "id": "43290",
     "dealabsId": "3290768",
     "community": "dealabs",
-    "uuid": "7fc06601-56ab-5f16-a101-0c61795fd5b9"
+    "uuid": "7fc06601-56ab-5f16-a101-0c61795fd5b9",
+    "photo": null
   },
   {
     "_id": "cf982abc-c972-5614-8926-373f87390e20",
@@ -440,13 +469,14 @@
     "retail": 14.25,
     "price": 9.81,
     "discount": 31,
-    "temperature": 69.94,
+    "temperature": 72.34,
     "comments": 0,
     "published": "2026-03-23T14:05:52.000Z",
     "title": "Lego Disney 43243 - Simba, le bébé du Roi lion (via 3.27€ en Tickets E.Leclerc)",
     "id": "43243",
     "dealabsId": "3301087",
     "community": "dealabs",
-    "uuid": "cf982abc-c972-5614-8926-373f87390e20"
+    "uuid": "cf982abc-c972-5614-8926-373f87390e20",
+    "photo": null
   }
 ]

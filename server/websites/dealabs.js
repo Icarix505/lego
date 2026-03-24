@@ -71,7 +71,12 @@ function parse(html) {
     const price = thread.price ?? 0;
     const retail = thread.nextBestPrice ?? 0;
     const discount = computeDiscount(price, retail, thread.percentage);
-
+    const photo =
+    thread?.photo ||
+    thread?.image ||
+    thread?.media?.image?.url ||
+    thread?.media?.url ||
+    null;
     deals.push({
       _id: dealUuid,
       link,
@@ -87,7 +92,8 @@ function parse(html) {
       id: legoSetId || String(thread.threadId),
       dealabsId: String(thread.threadId),
       community: 'dealabs',
-      uuid: dealUuid
+      uuid: dealUuid,
+      photo
     });
   });
 
