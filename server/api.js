@@ -9,6 +9,10 @@ import { buildVintedJsonFromDeals } from './websites/vinted.js';
 const app = express();
 const PORT = 8092;
 
+// Mets false si tu veux protéger les fichiers existants au démarrage
+const REFRESH_DEALABS_ON_BOOT = true;
+const REFRESH_VINTED_ON_BOOT = true;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,6 +23,16 @@ const CLIENT_V2_DIR = path.join(__dirname, '..', 'client', 'v2');
 async function readJson(filePath) {
   const text = await fs.readFile(filePath, 'utf-8');
   return JSON.parse(text);
+}
+
+async function readJsonSafe(filePath, fallbackValue) {
+  try {
+    const text = await fs.readFile(filePath, 'utf-8');
+    return JSON.parse(text);
+  } catch (error) {
+    console.warn(`readJsonSafe fallback for ${filePath}: ${error.message}`);
+    return fallbackValue;
+  }
 }
 
 function paginate(items, page = 1, size = 6) {
@@ -80,7 +94,7 @@ app.get('/deals', async (req, res) => {
     const page = Number(req.query.page) || 1;
     const size = Number(req.query.size) || 6;
 
-    let deals = await readJson(DEALS_FILE);
+    let deals = await readJsonSafe(DEALS_FILE, []);
     deals = deals.map(adaptDealForV2);
 
     deals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -104,7 +118,7 @@ app.get('/deals', async (req, res) => {
 app.get('/sales', async (req, res) => {
   try {
     const id = String(req.query.id || '').trim();
-    const salesBySetId = await readJson(SALES_FILE);
+    const salesBySetId = await readJsonSafe(SALES_FILE, {});
 
     const result = id ? (salesBySetId[id] || []) : [];
 
@@ -133,13 +147,13 @@ app.get('/deals/search', async (req, res) => {
     const minDate = req.query.date ? new Date(req.query.date) : null;
     const filterBy = req.query.filterBy;
 
-    let deals = await readJson(DEALS_FILE);
+    let deals = await readJsonSafe(DEALS_FILE, []);
 
     if (maxPrice !== null) {
       deals = deals.filter((deal) => Number(deal.price) <= maxPrice);
     }
 
-    if (minDate) {
+    if (minDate && !Number.isNaN(minDate.getTime())) {
       deals = deals.filter((deal) => {
         if (!deal.published) return false;
         return new Date(deal.published) >= minDate;
@@ -172,7 +186,7 @@ app.get('/sales/search', async (req, res) => {
   try {
     const limit = Number(req.query.limit) || 12;
     const legoSetId = String(req.query.legoSetId || '').trim();
-    const salesBySetId = await readJson(SALES_FILE);
+    const salesBySetId = await readJsonSafe(SALES_FILE, {});
 
     let result = legoSetId ? (salesBySetId[legoSetId] || []) : [];
 
@@ -193,14 +207,26 @@ app.get('/sales/search', async (req, res) => {
 });
 
 async function boot() {
-  console.log('Step 1: scraping Dealabs...');
-  await saveDealsJson('https://www.dealabs.com/groupe/lego');
+  if (REFRESH_DEALABS_ON_BOOT) {
+    console.log('Step 1: scraping Dealabs...');
+    await saveDealsJson('https://www.dealabs.com/groupe/lego');
+  } else {
+    console.log('Step 1 skipped: keeping existing dealabs.json');
+  }
 
   console.log('Step 2: reading dealabs.json...');
-  const deals = await readJson(DEALS_FILE);
+  const deals = await readJsonSafe(DEALS_FILE, []);
 
-  console.log('Step 3: building vinted.json from deal ids...');
-  await buildVintedJsonFromDeals(deals);
+  if (!Array.isArray(deals)) {
+    throw new Error('dealabs.json is not a valid array');
+  }
+
+  if (REFRESH_VINTED_ON_BOOT) {
+    console.log('Step 3: building vinted.json from deal ids...');
+    await buildVintedJsonFromDeals(deals);
+  } else {
+    console.log('Step 3 skipped: keeping existing vinted.json');
+  }
 
   app.listen(PORT, () => {
     console.log(`API running on http://localhost:${PORT}`);

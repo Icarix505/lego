@@ -28,11 +28,95 @@ function extractLegoSetId(...texts) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // on veut un vrai set id LEGO, pas le thread id Dealabs
   const match5 = joined.match(/\b\d{5}\b/);
   if (match5) return match5[0];
 
+  const match4 = joined.match(/\b\d{4}\b/);
+  if (match4) return match4[0];
+
   return '';
+}
+
+function normalizeUrl(url) {
+  if (typeof url !== 'string' || url.trim() === '') return null;
+
+  const clean = url.trim();
+
+  if (clean.startsWith('//')) return `https:${clean}`;
+  if (clean.startsWith('/')) return `${BASE_URL}${clean}`;
+  if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
+
+  return clean;
+}
+
+function extractFromSrcset(srcset) {
+  if (typeof srcset !== 'string' || srcset.trim() === '') return null;
+
+  const first = srcset
+    .split(',')
+    .map((part) => part.trim().split(' ')[0])
+    .find(Boolean);
+
+  return normalizeUrl(first);
+}
+
+function extractPhotoUrl(thread = {}, article = null) {
+  const candidates = [
+    thread?.photo?.url,
+    thread?.photo?.path,
+    thread?.photo?.large,
+    thread?.photo?.medium,
+    thread?.photo?.thumb,
+    thread?.photoUrl,
+    thread?.imageUrl,
+    thread?.coverPhoto,
+    thread?.cover?.url,
+    thread?.image?.url,
+    thread?.image?.path,
+    thread?.media?.image?.url,
+    thread?.media?.image?.path,
+    thread?.media?.url,
+    thread?.media?.cover?.url,
+    thread?.media?.[0]?.url,
+    thread?.media?.[0]?.path,
+    thread?.images?.[0]?.url,
+    thread?.images?.[0]?.path,
+    typeof thread?.photo === 'string' ? thread.photo : null,
+    typeof thread?.image === 'string' ? thread.image : null
+  ]
+    .map(normalizeUrl)
+    .find(Boolean);
+
+  if (candidates) {
+    return candidates;
+  }
+
+  if (article) {
+    const domCandidates = [
+      article.find('img').first().attr('src'),
+      article.find('img').first().attr('data-src'),
+      article.find('img').first().attr('data-lazy-src'),
+      article.find('img').first().attr('srcset'),
+      article.find('[data-t="threadImg"]').first().attr('src'),
+      article.find('[data-t="threadImg"]').first().attr('data-src'),
+      article.find('picture source').first().attr('srcset'),
+      article.find('figure img').first().attr('src'),
+      article.find('figure img').first().attr('data-src')
+    ];
+
+    for (const candidate of domCandidates) {
+      const normalized =
+        typeof candidate === 'string' && candidate.includes(',')
+          ? extractFromSrcset(candidate)
+          : normalizeUrl(candidate);
+
+      if (normalized) {
+        return normalized;
+      }
+    }
+  }
+
+  return null;
 }
 
 function parse(html) {
@@ -50,15 +134,19 @@ function parse(html) {
       return;
     }
 
-    const thread = parsed?.props?.thread;//attribute of attribute 
+    const thread = parsed?.props?.thread;
     if (!thread) return;
 
     const dealUuid = uuidv5(`dealabs:${thread.threadId}`, uuidv5.URL);
     const article = $(`#thread_${thread.threadId}`);
 
-    const anchor = article.find('a.js-thread-title').first();
-    const href = anchor.attr('href') || '';
-    const link = href.startsWith('http') ? href : `${BASE_URL}${href}`;
+    const anchor =
+      article.find('a.js-thread-title').first().length > 0
+        ? article.find('a.js-thread-title').first()
+        : article.find('a').first();
+
+    const href = anchor.attr('href') || thread?.url || '';
+    const link = normalizeUrl(href) || `${BASE_URL}`;
 
     const snippet = article
       .find('.userHtml-content')
@@ -71,12 +159,8 @@ function parse(html) {
     const price = thread.price ?? 0;
     const retail = thread.nextBestPrice ?? 0;
     const discount = computeDiscount(price, retail, thread.percentage);
-    const photo =
-    thread?.photo ||
-    thread?.image ||
-    thread?.media?.image?.url ||
-    thread?.media?.url ||
-    null;
+    const photo = extractPhotoUrl(thread, article);
+
     deals.push({
       _id: dealUuid,
       link,

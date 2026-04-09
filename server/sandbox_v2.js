@@ -41,7 +41,10 @@ async function scrapeDealabs(website = 'https://www.dealabs.com/groupe/lego') {
     temperature: deal.temperature,
     price: deal.price,
     published: deal.published,
-    uuid: deal.uuid
+    uuid: deal.uuid,
+    link: deal.link,
+    discount: deal.discount,
+    photo: deal.photo || null
   }));
 
   const output = await writeJsonFile('./data/dealabs.json', deals);
