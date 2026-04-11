@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import * as cheerio from 'cheerio';
 import { v5 as uuidv5 } from 'uuid';
 
-const BASE_URL = 'https://www.dealabs.com';
+const BASE_URL = 'https://www.dealabs.com/groupe/lego';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,63 +61,15 @@ function extractFromSrcset(srcset) {
 }
 
 function extractPhotoUrl(thread = {}, article = null) {
-  const candidates = [
-    thread?.photo?.url,
-    thread?.photo?.path,
-    thread?.photo?.large,
-    thread?.photo?.medium,
-    thread?.photo?.thumb,
-    thread?.photoUrl,
-    thread?.imageUrl,
-    thread?.coverPhoto,
-    thread?.cover?.url,
-    thread?.image?.url,
-    thread?.image?.path,
-    thread?.media?.image?.url,
-    thread?.media?.image?.path,
-    thread?.media?.url,
-    thread?.media?.cover?.url,
-    thread?.media?.[0]?.url,
-    thread?.media?.[0]?.path,
-    thread?.images?.[0]?.url,
-    thread?.images?.[0]?.path,
-    typeof thread?.photo === 'string' ? thread.photo : null,
-    typeof thread?.image === 'string' ? thread.image : null
-  ]
-    .map(normalizeUrl)
-    .find(Boolean);
-
-  if (candidates) {
-    return candidates;
+  // NOUVEAU : construire l'URL depuis mainImage
+  if (thread?.mainImage?.path && thread?.mainImage?.name) {
+    const { path, name, ext } = thread.mainImage;
+    const extension = ext && ext !== 'raw' ? ext : 'jpg';
+    return `https://static-pepper.dealabs.com/${path}/${name}/re/202x202/qt/70/${name}.${extension}`;
   }
-
-  if (article) {
-    const domCandidates = [
-      article.find('img').first().attr('src'),
-      article.find('img').first().attr('data-src'),
-      article.find('img').first().attr('data-lazy-src'),
-      article.find('img').first().attr('srcset'),
-      article.find('[data-t="threadImg"]').first().attr('src'),
-      article.find('[data-t="threadImg"]').first().attr('data-src'),
-      article.find('picture source').first().attr('srcset'),
-      article.find('figure img').first().attr('src'),
-      article.find('figure img').first().attr('data-src')
-    ];
-
-    for (const candidate of domCandidates) {
-      const normalized =
-        typeof candidate === 'string' && candidate.includes(',')
-          ? extractFromSrcset(candidate)
-          : normalizeUrl(candidate);
-
-      if (normalized) {
-        return normalized;
-      }
-    }
-  }
-
-  return null;
 }
+
+  // ... tout le reste du code existant inchangé
 
 function parse(html) {
   const $ = cheerio.load(html);
