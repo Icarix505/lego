@@ -2,7 +2,7 @@
 
 Bonjour,
 
-Je mets ici quelques explications pour lancer mon projet, avec quelques captures d'écran, au cas où jamais il y aurait un petit problème au lancement que ce soit à cause du cookie ou autre
+Je mets ici quelques explications simples sur mon projet, avec quelques captures d'écran, au cas où jamais il y aurait un petit problème au lancement sur votre machine.
 
 Je préfère préciser aussi que je m'excuse pour ne pas avoir réussi à faire le déploiement sur la solution de déploiement demandée. J'ai essayé, mais certaines fonctionnalités ne fonctionnaient pas correctement une fois dans ce cadre, donc j'ai préféré laisser une version locale qui fonctionne normalement mieux.
 
@@ -19,7 +19,7 @@ Il y a en gros deux parties principales :
 
 ---
 
-## 2. scraping d'un site de type Dealabs
+## 2. Première étape : scraping d'un site de type Dealabs
 
 Dans un premier temps, j'ai travaillé sur le scraping d'un site de type Dealabs, pour récupérer des offres LEGO.
 
@@ -29,8 +29,21 @@ Capture d'écran correspondante :
 
 ---
 
+## 3. Deuxième étape : scraping Internet pour récupérer des ventes
 
-## 3. Lancement du projet
+Dans un deuxième temps, j'ai aussi fait de la récupération de données depuis Internet pour retrouver des ventes liées à un identifiant LEGO, ici avec le script qui interroge la source utilisée pour les ventes.
+
+
+
+## 4. Capture de secours du site
+
+Je mets aussi ce screen au cas où le site ne fonctionnerait pas directement chez vous, notamment à cause du cookie. Normalement il fonctionne, mais je préfère mettre cette image en backup, juste pour montrer le layout et l'apparence générale du rendu.
+
+![Layout du site en backup](./layout_backup.png)
+
+---
+
+## 5. Lancement du projet
 
 ### Pour lancer le site
 
@@ -52,14 +65,16 @@ node api.js
 
 ---
 
-## 4. À propos du cookie
+## 6. À propos du cookie
 
 Si jamais le cookie ne marche pas, il peut être nécessaire de le changer / de le remplacer dans le code avec une valeur valide.
 
-c'est dans vinted.js, la première ligne dans les guillemets vous pouvez le changer
+Je préfère le préciser car selon la machine, la session, ou le moment du test, cette partie peut demander une petite remise à jour.
 
-## 5. Excuses pour l'étape 5
+---
+
+## 7. Petite précision finale
 
 Je m'excuse encore pour le fait de ne pas avoir pu faire un déploiement propre sur la plateforme demandée.
 
-j'ai eu pas mal de pb avec les fonction boot notamment qui ne se lancent pas et la page html qui bug quand lancer toute seule
+j'ai eu pas mal de pb avec les fonction boot notamment qui ne se lancent
