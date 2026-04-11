@@ -1,109 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LEGO Deals Dashboard</title>
-  <link rel="stylesheet" href="./style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LEGO Deals Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div id="app">
-    <h1>🧱 LEGO Deals Dashboard</h1>
+<div id="noise"></div>
 
-    <div class="page-layout">
-      <aside class="sidebar">
-        <section id="options" class="panel">
-          <h2>Options</h2>
-
-          <div id="show" class="control-group">
-            <label for="show-select">Show</label>
-            <select name="show" id="show-select">
-              <option value="6">6</option>
-              <option value="12">12</option>
-              <option value="24">24</option>
-            </select>
-          </div>
-
-          <div id="page" class="control-group">
-            <label for="page-select">Go to page</label>
-            <select name="page" id="page-select"></select>
-          </div>
-
-          <div id="filters" class="control-group">
-            <label for="filters-select">Filter</label>
-            <select name="filters" id="filters-select">
-              <option value="">None</option>
-              <option value="discount">Best discount (&gt;15%)</option>
-              <option value="comments">Most commented (&gt;7)</option>
-              <option value="hot">Hot deals (&gt;100°)</option>
-            </select>
-          </div>
-
-          <div id="sort" class="control-group">
-            <label for="sort-select">Sort</label>
-            <select name="sort" id="sort-select">
-              <option value="">Default</option>
-              <option value="price-asc">Cheaper</option>
-              <option value="price-desc">Expensive</option>
-              <option value="date-asc">Recently published</option>
-              <option value="date-desc">Anciently published</option>
-              <option value="discount-asc">Best discount</option>
-              <option value="discount-desc">Worst discount</option>
-            </select>
-          </div>
-        </section>
-
-        <section id="lego" class="panel">
-          <h2>Lego sets</h2>
-          <div class="control-group">
-            <label for="lego-set-id-select">Lego set id</label>
-            <select id="lego-set-id-select"></select>
-          </div>
-        </section>
-
-        <section id="indicators" class="panel">
-          <h2>Indicators</h2>
-          <div class="indicators-grid">
-            <div class="indicator-card">
-              <div class="indicator-label">Number of deals</div>
-              <div class="indicator-value" id="nbDeals">0</div>
-            </div>
-
-            <div class="indicator-card">
-              <div class="indicator-label">Number of sales</div>
-              <div class="indicator-value" id="nbSales">0</div>
-            </div>
-
-            <div class="indicator-card">
-              <div class="indicator-label">p5 sales price</div>
-              <div class="indicator-value" id="p5">0</div>
-            </div>
-
-            <div class="indicator-card">
-              <div class="indicator-label">p25 sales price</div>
-              <div class="indicator-value" id="p25">0</div>
-            </div>
-
-            <div class="indicator-card">
-              <div class="indicator-label">p50 sales price</div>
-              <div class="indicator-value" id="p50">0</div>
-            </div>
-
-            <div class="indicator-card">
-              <div class="indicator-label">Lifetime value</div>
-              <div class="indicator-value">10 days</div>
-            </div>
-          </div>
-        </section>
-      </aside>
-
-      <main class="content">
-        <section id="deals" class="section-box"></section>
-      </main>
+<div id="app">
+  <header class="site-header">
+    <div class="header-left">
+      <div class="logo-brick">
+        <span class="brick-stud"></span>
+        <span class="brick-stud"></span>
+        <span class="brick-stud"></span>
+      </div>
+      <h1>LEGO<br><span>DEALS</span></h1>
     </div>
-  </div>
+    <div class="header-right">
+      <div class="header-stat">
+        <span class="stat-num" id="nbDeals">0</span>
+        <span class="stat-label">deals</span>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-stat">
+        <span class="stat-num" id="nbSales">0</span>
+        <span class="stat-label">vinted sales</span>
+      </div>
+    </div>
+  </header>
 
-  <script src="utils.js"></script>
-  <script src="portfolio.js"></script>
+  <div class="page-layout">
+
+    <aside class="sidebar">
+
+      <section class="panel panel--controls">
+        <div class="panel-label">CONTROLS</div>
+
+        <div class="control-group">
+          <label for="show-select">Items per page</label>
+          <select name="show" id="show-select">
+            <option value="6">6</option>
+            <option value="12">12</option>
+            <option value="24">24</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="page-select">Page</label>
+          <select name="page" id="page-select"></select>
+        </div>
+
+        <div class="control-group">
+          <label for="filters-select">Filter by</label>
+          <select name="filters" id="filters-select">
+            <option value="">— None —</option>
+            <option value="discount">Best discount (&gt;15%)</option>
+            <option value="comments">Most commented (&gt;7)</option>
+            <option value="hot">Hot deals (&gt;100°)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="sort-select">Sort by</label>
+          <select name="sort" id="sort-select">
+            <option value="">Default</option>
+            <option value="price-asc">Cheapest first</option>
+            <option value="price-desc">Most expensive</option>
+            <option value="date-asc">Recently published</option>
+            <option value="date-desc">Oldest first</option>
+            <option value="discount-asc">Best discount</option>
+            <option value="discount-desc">Worst discount</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="panel panel--lego">
+        <div class="panel-label">VINTED LOOKUP</div>
+        <div class="control-group">
+          <label for="lego-set-id-select">Lego Set ID</label>
+          <select id="lego-set-id-select"></select>
+        </div>
+      </section>
+
+      <section class="panel panel--indicators">
+        <div class="panel-label">MARKET DATA</div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <div class="indicator-label">p5 price</div>
+            <div class="indicator-value" id="p5">—</div>
+          </div>
+          <div class="indicator-card">
+            <div class="indicator-label">p25 price</div>
+            <div class="indicator-value" id="p25">—</div>
+          </div>
+          <div class="indicator-card indicator-card--wide">
+            <div class="indicator-label">Median (p50)</div>
+            <div class="indicator-value" id="p50">—</div>
+          </div>
+          <div class="indicator-card indicator-card--wide">
+            <div class="indicator-label">Lifetime value</div>
+            <div class="indicator-value">10 days</div>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+    <main class="content">
+      <section id="deals" class="section-box"></section>
+    </main>
+
+  </div>
+</div>
+
+<script src="utils.js"></script>
+<script src="portfolio.js"></script>
 </body>
 </html>
